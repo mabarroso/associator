@@ -1,48 +1,30 @@
 require "associator/engine"
 
 module Associator
-	def self.included(base)
-	end
-
 end
 
 class ActiveRecord::Base
 	def self.associated	opts={}
-		@from_type = name.downcase
+		@@from_type = name.downcase
 		if opts[:with]
-			@to_type = opts[:with].to_s.downcase
-			#has_many @to_type, :foreign_key => 'to', :conditions => {:from_type => @from_type, :to_type => @to_type}
-
-#			class_eval <<-RUBY
-#				class Association_#{@from_type}_#{@to_type} < ActiveRecord::Base
-#					set_table_name :associations
-#   				belongs_to :#{@from_type}
-#   				belongs_to :#{@to_type}
-#   			end
-#      RUBY
-#			has_many @to_type, :through => "Association_#{@from_type}_#{@to_type}", :foreign_key => 'to', :conditions => {:from_type => @from_type, :to_type => @to_type}
-#			has_and_belongs_to_many @to_type, :join_table => :associations, :foreign_key => 'from', :association_foreign_key => 'to', :conditions => {"association.from_type" => @from_type, "association.to_type" => @to_type}
-
-      has_many @to_type, :finder_sql => "
-				SELECT 'groups'.* FROM 'groups'
-					INNER JOIN 'associations' ON ('groups'.'id' = 'associations'.'from'
-					  AND 'associations'.'to' = 4
-					  AND 'associations'.'from_type' = 'group'
-					  AND 'associations'.'to_type' = 'group'
+			@@to_type = opts[:with].to_s.downcase
+			# http://stackoverflow.com/questions/8545360/finder-sql-does-not-parse-string-with-rails
+      has_many @@to_type, :finder_sql => ->(record) do
+        record = self if(record.nil?)
+        "
+				SELECT 'groups'.* FROM groups
+					INNER JOIN 'associations' ON ('groups'.'id' = 'associations'.'to'
+					  AND 'associations'.'from' = #{record.id}
+					  AND 'associations'.'from_type' = '#{@@from_type}'
+					  AND 'associations'.'to_type' = '#{@@to_type}'
 					)
-			"
-#			has_and_belongs_to_many :ar, :join_table => :associations, :finder_sql => "
-#				SELECT 'groups'.* FROM 'groups'
-#					INNER JOIN 'associations' ON ('groups'.'id' = 'associations'.'to' AND 'associations'.'from' = 1 AND 'association'.'from_type' = 'group' AND 'association'.'to_type' = 'group')
-#			"
-		end
+			  "
+      end
+    end
 	end
 
   def add_associated obj
-    @from_type = obj.class.name.downcase
-  	Associator::Association.create(:from => id, :from_type => @from_type, :to => obj.id, :to_type => obj.name.downcase, :key => "#{id}_#{obj.id}")
+  	Associator::Association.create(:from => id, :from_type => @@from_type, :to => obj.id, :to_type => @@to_type, :key => "#{id}_#{obj.id}")
 	end
-
-	private
 
 end
