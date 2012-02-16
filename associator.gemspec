@@ -7,11 +7,11 @@ require "associator/version"
 Gem::Specification.new do |s|
   s.name        = "associator"
   s.version     = Associator::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of Associator."
-  s.description = "TODO: Description of Associator."
+  s.authors     = ["Miguel Adolfo Barroso"]
+  s.email       = ["mabarroso@mabarroso.com"]
+  s.homepage    = "http://github.com/mabarroso/associator"
+  s.summary     = "Associate any model to some model."
+  s.description = "Associate any model to some model."
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
