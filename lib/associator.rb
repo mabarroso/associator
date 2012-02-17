@@ -35,11 +35,11 @@ class ActiveRecord::Base
 	def finder record
 		record = self if(record.nil?)
 	    "
-		SELECT '#{@@table_name}'.* FROM '#{@@table_name}'
-			INNER JOIN 'associations' ON ('#{@@table_name}'.'id' = 'associations'.'to'
-			  AND 'associations'.'from' = #{record.id}
-			  AND 'associations'.'from_type' = '#{@@from_type}'
-			  AND 'associations'.'to_type' = '#{@@to_type}'
+		SELECT #{@@table_name}.* FROM #{@@table_name}
+			INNER JOIN associations ON (#{@@table_name}.id = associations.to
+			  AND associations.from = #{record.id}
+			  AND associations.from_type = '#{@@from_type}'
+			  AND associations.to_type = '#{@@to_type}'
 			)
 	  "
 	end
