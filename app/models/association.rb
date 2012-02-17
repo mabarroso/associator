@@ -1,2 +1,2 @@
-class Association < ActiveRecord::Base
+class Association2 < ActiveRecord::Base
 end

@@ -1,7 +1,10 @@
 require "associator/engine"
 
 module Associator
+  class Association < ActiveRecord::Base
+  end
 end
+
 
 class ActiveRecord::Base
 	def self.associated	opts={}
@@ -28,6 +31,7 @@ class ActiveRecord::Base
 
   def add_associated obj
   	Associator::Association.create(:from => id, :from_type => @@from_type, :to => obj.id, :to_type => @@to_type, :key => "#{id}_#{obj.id}")
+#  	Association.create(:from => id, :from_type => @@from_type, :to => obj.id, :to_type => @@to_type, :key => "#{id}_#{obj.id}")
 	end
 
 	private
