@@ -15,6 +15,8 @@ Creates a one-to-many relationship between any models.
 
 ```shell
   bundle install
+  rake associator_engine:install:migrations
+  rake db:migrate
 ```
 
 #Usage
