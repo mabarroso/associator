@@ -10,8 +10,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Miguel Adolfo Barroso"]
   s.email       = ["mabarroso@mabarroso.com"]
   s.homepage    = "http://github.com/mabarroso/associator"
-  s.summary     = "Associate any model to some model."
-  s.description = "Associate any model to some model."
+  s.summary     = "Associate any model to any model."
+  s.description = "Associate any model to any model."
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
@@ -20,4 +20,5 @@ Gem::Specification.new do |s|
   # s.add_dependency "jquery-rails"
 
   s.add_development_dependency "sqlite3"
+  s.add_development_dependency "rspec", "~> 2.7.0"
 end
