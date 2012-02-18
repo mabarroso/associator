@@ -21,10 +21,10 @@ describe Four do
     r[0].value.should == @bar.value
   end
 
-#  it "has not associated" do
-#    @foo.add_associated(@bar)
-#    b = Five.first
-#    r = b.four
-#    r.should == []
-#  end
+  it "has not associated" do
+    @foo.add_associated(@bar)
+    b = Five.first
+    r = b.four
+    r.should == []
+  end
 end

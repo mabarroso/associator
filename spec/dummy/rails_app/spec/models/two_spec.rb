@@ -15,7 +15,7 @@ describe Two do
 
   it "has associated" do
     @foo.add_associated(@bar)
-    f = Two.last
+    f = Two.first
     r = f.two
     r[0].value.should == @bar.value
   end
