@@ -10,7 +10,12 @@ describe Three do
     @bar = Two.create :value => 'bar 2'
   end
 
-  it "is valid" do
+  it "is valid add" do
+    @foo.add_associated(@bar).should be_valid
+  end
+
+  it "is valid del" do
+    @foo.del_associated(@bar)
     @foo.add_associated(@bar).should be_valid
   end
 
@@ -19,6 +24,14 @@ describe Three do
     f = Three.first
     r = f.two
     r[0].value.should == @bar.value
+  end
+
+  it "has not associated now" do
+    @foo.add_associated(@bar)
+    @foo.del_associated(@bar)
+    f = Three.first
+    r = f.two
+    r.should == []
   end
 
   it "has not associated" do

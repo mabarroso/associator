@@ -34,6 +34,11 @@ class ActiveRecord::Base
   			define_method(:add_associated) do |obj|
   			  Associator::Association.create(:from => id, :from_type => '#{@from_type}', :to => obj.id, :to_type => '#{@to_type}')
   			end
+
+  			define_method(:del_associated) do |obj|
+  			  association = Associator::Association.where(:from => id, :from_type => '#{@from_type}', :to => obj.id, :to_type => '#{@to_type}')
+  			  Associator::Association.destroy(association) if association && association.size == 1
+  			end
 			"
     end
 	end
